@@ -1,47 +1,21 @@
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+
         String[] texts = new String[25];
         for (int i = 0; i < texts.length; i++) {
             texts[i] = generateText("aab", 30_000);
         }
 
-        System.out.println("Однопоточное решение задачи:");
-        long start1 = System.currentTimeMillis(); // start time
-        for (String text : texts) {
-            int maxSize = 0;
-            for (int i = 0; i < text.length(); i++) {
-                for (int j = 0; j < text.length(); j++) {
-                    if (i >= j) {
-                        continue;
-                    }
-                    boolean bFound = false;
-                    for (int k = i; k < j; k++) {
-                        if (text.charAt(k) == 'b') {
-                            bFound = true;
-                            break;
-                        }
-                    }
-                    if (!bFound && maxSize < j - i) {
-                        maxSize = j - i;
-                    }
-                }
-            }
-            System.out.println(text.substring(0, 100) + " -> " + maxSize);
-        }
-        long end1 = System.currentTimeMillis(); // end time
-        long time1 = end1 - start1;
-        System.out.println("Time: " + time1 + " ms - однопоточное решение");
+        int max = 0;
 
-        System.out.println();
-
-        System.out.println("Многопоточное решение задачи:");
-        long start2 = System.currentTimeMillis(); // start time
-        List<Thread> threads = new ArrayList<>();
+        ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        List<Future<Integer>> futures = new ArrayList<>();
         for (String text : texts) {
-            Thread thread = new Thread(() -> {
+            Callable<Integer> callable = () -> {
                 int maxSize = 0;
                 for (int i = 0; i < text.length(); i++) {
                     for (int j = 0; j < text.length(); j++) {
@@ -60,20 +34,17 @@ public class Main {
                         }
                     }
                 }
-                System.out.println(text.substring(0, 100) + " -> " + maxSize);
-            });
-            threads.add(thread);
-            thread.start();
+                return maxSize;
+            };
+            Future<Integer> task = pool.submit(callable);
+            futures.add(task);
         }
-        for (Thread thread : threads) {
-            thread.join();
+        for (Future<Integer> future : futures) {
+            int result = future.get();
+            max = Math.max(max, result);
         }
-
-        long end2 = System.currentTimeMillis(); // end time
-        long time2 = end2 - start2;
-
-        System.out.println("Time: " + time2 + " ms - многопоточное решение");
-        System.out.println("Разница во времени лучше у многопоточного решения на " + (time1 - time2) + " мс");
+        System.out.println("Максимальный интервал значений среди всех строк: " + max);
+        pool.shutdown();
     }
 
     public static String generateText(String letters, int length) {
