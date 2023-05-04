@@ -18,4 +18,8 @@ public class PhoneBook {
                 .map(Map.Entry::getKey)
                 .findFirst().get();
     }
+
+    public String findByName(String name) {
+        return null;
+    }
 }

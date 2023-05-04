@@ -42,13 +42,25 @@ public class PhoneBookTests {
     }
 
     @Test
-    public void TestFindByName() {
+    public void TestFindByNumber() {
         String excepted = "name";
 
         phoneBook.add("name", "880053535");
         phoneBook.add("name2", "555");
 
         String result = phoneBook.findByNumber("880053535");
+
+        Assertions.assertEquals(excepted, result);
+    }
+
+    @Test
+    public void TestFindByName() {
+        String excepted = "880053535";
+
+        phoneBook.add("name", "880053535");
+        phoneBook.add("name2", "555");
+
+        String result = phoneBook.findByName("name");
 
         Assertions.assertEquals(excepted, result);
     }
