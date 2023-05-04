@@ -3,6 +3,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.ntology.PhoneBook;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+
 public class PhoneBookTests {
     private PhoneBook phoneBook;
 
@@ -30,7 +34,7 @@ public class PhoneBookTests {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 5, 8})
-    public void TestAdd_SimpleAdd(int argument) {
+    public void TestAdd(int argument) {
         int excepted = argument;
 
         int result = 0;
@@ -61,6 +65,22 @@ public class PhoneBookTests {
         phoneBook.add("name2", "555");
 
         String result = phoneBook.findByName("name");
+
+        Assertions.assertEquals(excepted, result);
+    }
+
+    @Test
+    public void TestPrintAllNames() {
+        List<String> excepted = new ArrayList<>();
+        excepted.add("A");
+        excepted.add("B");
+        excepted.add("C");
+
+        phoneBook.add("B", "48484");
+        phoneBook.add("A", "466");
+        phoneBook.add("C", "6226");
+
+        List<String> result = phoneBook.printAllName();
 
         Assertions.assertEquals(excepted, result);
     }

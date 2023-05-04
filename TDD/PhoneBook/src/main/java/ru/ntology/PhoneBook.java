@@ -1,5 +1,6 @@
 package ru.ntology;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -21,5 +22,9 @@ public class PhoneBook {
 
     public String findByName(String name) {
         return  phoneBook.get(name);
+    }
+
+    public ArrayList<String> printAllName() {
+        return null;
     }
 }
