@@ -3,8 +3,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.ntology.PhoneBook;
 
-import java.util.Random;
-
 public class PhoneBookTests {
     private PhoneBook phoneBook;
 
@@ -37,7 +35,7 @@ public class PhoneBookTests {
 
         int result = 0;
         for (int i = 0; i < argument; i++) {
-            result = phoneBook.add("name" + argument, "nubmer");
+            result = phoneBook.add("name" + i, "nubmer");
         }
 
         Assertions.assertEquals(excepted, result);

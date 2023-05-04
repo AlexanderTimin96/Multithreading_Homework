@@ -1,8 +1,13 @@
 package ru.ntology;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public class PhoneBook {
+    private final Map<String, String> phoneBook = new TreeMap<>();
 
     public int add(String name, String number) {
-        return 0;
+        phoneBook.put(name, number);
+        return phoneBook.size();
     }
 }
