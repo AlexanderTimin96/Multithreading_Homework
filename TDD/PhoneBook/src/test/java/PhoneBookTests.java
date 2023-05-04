@@ -43,7 +43,7 @@ public class PhoneBookTests {
 
     @Test
     public void TestFindByName() {
-        String excepted = "880053535";
+        String excepted = "name";
 
         phoneBook.add("name", "880053535");
         phoneBook.add("name2", "555");
