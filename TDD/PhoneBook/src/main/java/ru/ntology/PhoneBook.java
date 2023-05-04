@@ -1,6 +1,7 @@
 package ru.ntology;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -24,7 +25,8 @@ public class PhoneBook {
         return  phoneBook.get(name);
     }
 
-    public ArrayList<String> printAllName() {
-        return null;
+    public List<String> printAllName() {
+        ArrayList<String> allName = new ArrayList<>(phoneBook.keySet());
+        return allName;
     }
 }
