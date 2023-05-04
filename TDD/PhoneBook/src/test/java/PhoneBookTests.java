@@ -40,4 +40,16 @@ public class PhoneBookTests {
 
         Assertions.assertEquals(excepted, result);
     }
+
+    @Test
+    public void TestFindByName() {
+        String excepted = "880053535";
+
+        phoneBook.add("name", "880053535");
+        phoneBook.add("name2", "555");
+
+        String result = phoneBook.findByNumber("880053535");
+
+        Assertions.assertEquals(excepted, result);
+    }
 }
